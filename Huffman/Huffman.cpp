@@ -19,7 +19,7 @@ void getCodesForLetters(TreeNode *p, map<char, string> &codesMap, string code);
 
 string codeTextUsingMapWithCodes(string text, map<char, string> codes);
 
-string decodeTextUsingMapWithCodes(TreeNode *root, string text);
+string decodeText(TreeNode *root, string text);
 
 void printTreeNodesVector(vector<TreeNode> v);
 
@@ -27,7 +27,11 @@ void printTreeNodesList(list<TreeNode *> l);
 
 int main(int argc, char *argv[]) {
 
-    string text = "To jest jakis przykladowy tekst, ktory bedzie szyfrowany, a nastepnie rozszyfrowywany.";
+    string text = "To jest jakis przykladowy tekst";
+
+    cout << "Wprowadz tekst:\n";
+
+    getline(cin, text);                                                                                                                                                                                 text += " ";
 
     vector<TreeNode> noOfLetters = getCountOfLetters(text);
 
@@ -47,7 +51,7 @@ int main(int argc, char *argv[]) {
         newTreeNode->setRight(second);
 
         list<TreeNode *>::iterator iterator = noOfLettersList.begin();
-        while ((*iterator)->getCount() < newTreeNode->getCount()) {
+        while ((*iterator)->getCount() <= newTreeNode->getCount()) {
             if (iterator == noOfLettersList.end()) {
                 break;
             }
@@ -65,7 +69,7 @@ int main(int argc, char *argv[]) {
 
     cout << codedText << endl;
 
-    cout << decodeTextUsingMapWithCodes(root, codedText) << endl;
+    cout << decodeText(root, codedText) << endl;
 
     return 0;
 }
@@ -108,6 +112,7 @@ void getCodesForLetters(TreeNode *p, map<char, string> &codesMap, string code = 
     if (p != NULL) {
         if (p->getSymbol() != (char) NULL) {
             codesMap[p->getSymbol()] = code;
+            cout << p->getSymbol() << ": " << code << endl;
         }
         if (p->getLeft()) {
             string newCode = code + "0";
@@ -128,7 +133,7 @@ string codeTextUsingMapWithCodes(string text, map<char, string> codes) {
     return codedText;
 }
 
-string decodeTextUsingMapWithCodes(TreeNode *root, string text) {
+string decodeText(TreeNode *root, string text) {
     int i = 0;
     string decodedText = "";
     TreeNode *p = root;
